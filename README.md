@@ -8,6 +8,11 @@ This library is an abstraction; however in the delicate balance between
 performance and power, and API convenience, the scale is tipped closer to
 the former. Features that only exist in some sound backends are exposed.
 
+## Note on this Fork
+
+This fork is intended to ease the use of libsoundio as part of a cmake
+project using `add_subdirectory`.
+
 ## Features and Limitations
 
  * Supported operating systems:
@@ -195,72 +200,24 @@ Install the dependencies:
 mkdir build
 cd build
 cmake ..
-make
-sudo make install
+cmake --build .
+```
+
+Alternatively add using add_subdirectory
+
+```
+add_subdirectory(libsoundio)
+target_link_libraries(<your-target> PRIVATE libsoundio)
 ```
 
 ### Building for Windows
 
-You can build libsoundio with [mxe](http://mxe.cc/). Follow the
-[requirements](http://mxe.cc/#requirements) section to install the
-packages necessary on your system. Then somewhere on your file system:
-
-```
-git clone https://github.com/mxe/mxe
-cd mxe
-make MXE_TARGETS='x86_64-w64-mingw32.static i686-w64-mingw32.static' gcc
-```
-
-Then in the libsoundio source directory (replace "/path/to/mxe" with the
-appropriate path):
-
-```
-mkdir build-win32
-cd build-win32
-cmake .. -DCMAKE_TOOLCHAIN_FILE=/path/to/mxe/usr/i686-w64-mingw32.static/share/cmake/mxe-conf.cmake
-make
-```
-
-```
-mkdir build-win64
-cd build-win64
-cmake .. -DCMAKE_TOOLCHAIN_FILE=/path/to/mxe/usr/x86_64-w64-mingw32.static/share/cmake/mxe-conf.cmake
-make
-```
+Currently not supported
 
 ### Testing
 
-For each backend, do the following:
-
- 0. Run the unit tests: `./unit_tests`. To see test coverage, install lcov, run
-   `make coverage`, and then view `coverage/index.html` in a browser.
- 0. Run the example `./sio_list_devices` and make sure it does not crash, and
-    the output looks good. If valgrind is available, use it.
- 0. Run `./sio_list_devices --watch` and make sure it detects when you plug and
-    unplug a USB microphone.
- 0. Run `./sio_sine` and make sure you hear a sine wave. For backends with raw
-    devices, run `./sio_sine --device id --raw` (where 'id' is a device id you
-    got from `sio_list_devices` and make sure you hear a sine wave.
-    - Use 'p' to test pausing, 'u' to test unpausing, 'q' to test cleanup.
-    - 'c' for clear buffer. Clear buffer should not pause the stream and it
-      should also not cause an underflow.
-    - Use 'P' to test pausing from the callback, and then 'u' to unpause.
- 0. Run `./underflow` and read the testing instructions that it prints.
- 0. Run `./sio_microphone` and ensure that it is both recording and playing
-    back correctly. If possible use the `--in-device` and `--out-device`
-    parameters to test a USB microphone in raw mode.
- 0. Run `./backend_disconnect_recover` and read the testing instructions that
-    it prints.
- 0. Run `./latency` and make sure the printed beeps line up with the beeps that
-    you hear.
+Not present in this fork, visit [andrewrk/libsoundio](https://github.com/andrewrk/libsoundio) instead
 
 ### Building the Documentation
 
-Ensure that [doxygen](http://www.stack.nl/~dimitri/doxygen/) is installed,
-then:
-
-```
-make doc
-```
-
-Then look at `html/index.html` in a browser.
+Not present in this fork, visit [andrewrk/libsoundio](https://github.com/andrewrk/libsoundio) instead
